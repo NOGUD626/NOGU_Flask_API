@@ -3,6 +3,7 @@ import configparser
 from linebot.models import (FlexSendMessage,TextSendMessage,ImageSendMessage)
 from linebot import LineBotApi
 import os, ast
+import json
 
 # --------------------------------------------------
 # configparserの宣言とiniファイルの読み込み
@@ -15,7 +16,6 @@ config_ini.read('./cpslab/config.ini', encoding='utf-8')
 # --------------------------------------------------
 # config.iniの値取得その1
 LineBotToken = config_ini['CPSLAB']['LineBotToken']
-MasterMemberLine = config_ini['CPSLAB']['MasterMemberLine']
 
 # --------------------------------------------------
 # config,iniから値取得
@@ -33,6 +33,14 @@ if not os.path.isdir(SAVE_DIR):
 def TA_Chanel():
     return config_ini['CPSLAB']['MasterChanel']
 
+# --------------------------------------------------
+# Slackのユーザネーム修正関係
+# --------------------------------------------------
+
+def CatcheMaterLineID():
+    json_open = open('./cpslab/MasterLineList.json', 'r')
+    json_load = json.load(json_open)
+    return ([ i for i in json_load.values()])
 # --------------------------------------------------
 # Slackのユーザネーム修正関係
 # --------------------------------------------------
@@ -92,6 +100,6 @@ def TA_Template(autourName,message):
             }
         }
     }
-    print('Done')
     container_obj = FlexSendMessage.new_from_json_dict(payload)
-    line_bot_api.push_message("U12c4f3d6dd5cfc3c9ec79975b6a6684d", messages=container_obj)
+    for i in  CatcheMaterLineID():
+        line_bot_api.push_message(i, messages=container_obj)

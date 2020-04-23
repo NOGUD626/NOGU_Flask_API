@@ -51,6 +51,7 @@ def post_slack():
             elif(TA_Chanel == request.form['channel_id']):
                 userName = CPS_API.ChanegName(request.form["user_name"])
                 CPS_API.TA_Template(userName,request.form['text'])
+                CPS_API.CatcheMaterLineID()
             # その他チャネルでの処理
             else:
                 mondb = DBAcsess()
