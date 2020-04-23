@@ -4,6 +4,7 @@ from linebot.models import (FlexSendMessage,TextSendMessage,ImageSendMessage)
 from linebot import LineBotApi
 import os, ast
 import json
+import requests
 
 # --------------------------------------------------
 # configparserの宣言とiniファイルの読み込み
@@ -52,6 +53,17 @@ def ChanegName(name):
     else:
         return str(name)
 
+
+# --------------------------------------------------
+# Slackのユーザネーム修正関係
+# --------------------------------------------------
+def ChacheFileList(chanelID):
+    token = config_ini['CPSLAB']['SlackToken']
+    url = "https://slack.com/api/files.list?token={0}&channel={1}&count=1&pretty=1".format(token,chanelID)
+    result = requests.get(url)
+    data = json.loads(result.text)
+    for file in data["files"]:
+        print(file["url_private_download"],file["title"])
 # --------------------------------------------------
 # SlackのTAチャンネルから来たものをテンプレートメッセージとしてLINEへ転送
 # --------------------------------------------------

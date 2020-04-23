@@ -59,7 +59,7 @@ def make_image_messages():
 # main関数
 # --------------------------------------------------
 if __name__ == "__main__":
-    CPS_API.TA_Template()
+    CPS_API.ChacheFileList("C93UEN4KS")
     # postMessage("TEST","U12c4f3d6dd5cfc3c9ec79975b6a6684d")
     # postImage("U12c4f3d6dd5cfc3c9ec79975b6a6684d")
     # im = Image.open("CPSLabLogo_2019.png")
