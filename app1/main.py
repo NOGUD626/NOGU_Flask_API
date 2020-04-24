@@ -59,7 +59,7 @@ def post_slack():
                 # SLACKBOT = SlackPost("Slack", request.form["team_id"], request.form["channel_id"])
                 # SLACKBOT.message = request.form['text']
                 # SLACKBOT.POSTSlack()
-                CPS_API.TA_Template()
+                CPS_API.ChacheFileList(request.form["channel_id"])
 
         # if(request.form['user_id'] != "USLACKBOT"):
         #     URL = "https://hooks.slack.com/services/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"
