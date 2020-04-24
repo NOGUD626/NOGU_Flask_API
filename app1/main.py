@@ -53,12 +53,13 @@ def post_slack():
                 mondb.MongoDBV_2("Slack", "Chanel_data", data)
                 userName = CPS_API.ChanegName(request.form["user_name"])
                 CPS_API.TA_Template(userName,request.form['text'])
-                CPS_API.ChacheFileList(request.form["channel_id"])
+                #CPS_API.ChacheFileList(request.form["channel_id"])
             # その他チャネルでの処理
             else:
                 mondb = DBAcsess()
                 mondb.MongoDBV_2("Slack","Chanel_data",data)
-                CPS_API.TA_Template(userName, request.form['text'])
+                userName = CPS_API.ChanegName(request.form["user_name"])
+                CPS_API.TA_Template1(userName, request.form['text'])
                 CPS_API.ChacheFileList(request.form["channel_id"])
                 # SLACKBOT = SlackPost("Slack", request.form["team_id"], request.form["channel_id"])
                 # SLACKBOT.message = request.form['text']

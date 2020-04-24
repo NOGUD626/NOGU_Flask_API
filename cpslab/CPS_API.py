@@ -73,6 +73,7 @@ def SlackFileList(chanelID):
     url = "https://slack.com/api/files.list?token={0}&channel={1}&page=1&count=1&pretty=1".format(token, chanelID)
     result = requests.get(url)
     datas = json.loads(result.text)
+    print(datas)
     if ("files" in datas):
         data = datas["files"][0]
         return data["url_private_download"], data["title"]
@@ -93,6 +94,8 @@ def ChacheFileList(ChanelID):
     # チャンネルにキーがない場合は作成
     if not (ChanelID in Dictionary):
         Dictionary[ChanelID] = []
+        print("Check")
+        print(Dictionary)
 
     try:
         FileURL, FileName = SlackFileList(ChanelID)
@@ -164,10 +167,59 @@ def TA_Template(autourName, message):
         }
     }
     container_obj = FlexSendMessage.new_from_json_dict(payload)
+    # line_bot_api.push_message("U12c4f3d6dd5cfc3c9ec79975b6a6684d", messages=container_obj)
+    for i in CatcheMaterLineID():
+        line_bot_api.push_message(i, messages=container_obj)
+
+def TA_Template1(autourName, message):
+    line_bot_api = LineBotApi(LineBotToken)
+    payload = {
+        "type": "flex",
+        "altText": "Flex Message",
+        "contents": {
+            "type": "bubble",
+            "direction": "ltr",
+            "hero": {
+                "type": "image",
+                "url": "https://dad41150.ngrok.io/images/CPSLabLogo_2019_800.png",
+                "size": "full",
+                "aspectRatio": "16:9",
+                "aspectMode": "fit",
+                "backgroundColor": "#FFFFFF"
+            },
+            "body": {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                    {
+                        "type": "text",
+                        "text": "@" + autourName,
+                        "size": "lg",
+                        "align": "center"
+                    },
+                    {
+                        "type": "text",
+                        "text": "TAチャンネルのメッセージ",
+                        "color": "#988484"
+                    },
+                    {
+                        "type": "separator"
+                    },
+                    {
+                        "type": "text",
+                        "text": message,
+                        "flex": 0,
+                        "align": "start",
+                        "wrap": True
+                    }
+                ]
+            }
+        }
+    }
+    container_obj = FlexSendMessage.new_from_json_dict(payload)
     line_bot_api.push_message("U12c4f3d6dd5cfc3c9ec79975b6a6684d", messages=container_obj)
     # for i in CatcheMaterLineID():
     #     line_bot_api.push_message(i, messages=container_obj)
-
 # --------------------------------------------------
 # Slackのチャンネル(ファイル転送)
 # --------------------------------------------------
