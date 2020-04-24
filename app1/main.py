@@ -51,7 +51,7 @@ def post_slack():
             elif(TA_Chanel == request.form['channel_id']):
                 userName = CPS_API.ChanegName(request.form["user_name"])
                 CPS_API.TA_Template(userName,request.form['text'])
-                CPS_API.CatcheMaterLineID()
+                CPS_API.ChacheFileList(request.form["channel_id"])
             # その他チャネルでの処理
             else:
                 mondb = DBAcsess()
@@ -59,7 +59,6 @@ def post_slack():
                 # SLACKBOT = SlackPost("Slack", request.form["team_id"], request.form["channel_id"])
                 # SLACKBOT.message = request.form['text']
                 # SLACKBOT.POSTSlack()
-                CPS_API.ChacheFileList(request.form["channel_id"])
 
         # if(request.form['user_id'] != "USLACKBOT"):
         #     URL = "https://hooks.slack.com/services/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"
