@@ -49,6 +49,8 @@ def post_slack():
 
             # 副手チャンネルの場合の処理
             elif(TA_Chanel == request.form['channel_id']):
+                mondb = DBAcsess()
+                mondb.MongoDBV_2("Slack", "Chanel_data", data)
                 userName = CPS_API.ChanegName(request.form["user_name"])
                 CPS_API.TA_Template(userName,request.form['text'])
                 CPS_API.ChacheFileList(request.form["channel_id"])
@@ -56,6 +58,8 @@ def post_slack():
             else:
                 mondb = DBAcsess()
                 mondb.MongoDBV_2("Slack","Chanel_data",data)
+                CPS_API.TA_Template(userName, request.form['text'])
+                CPS_API.ChacheFileList(request.form["channel_id"])
                 # SLACKBOT = SlackPost("Slack", request.form["team_id"], request.form["channel_id"])
                 # SLACKBOT.message = request.form['text']
                 # SLACKBOT.POSTSlack()

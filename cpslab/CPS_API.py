@@ -102,7 +102,6 @@ def ChacheFileList(ChanelID):
     # 過去に保存されていルカ判定
     if (FileName in Dictionary[ChanelID]):
         return 0
-
     SendLineFileLink(FileURL, "TAチャンネル", FileName)
     print("Done")
 
